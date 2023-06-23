@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "description": "Example of over engineered todo app haha",
   "scripts": {
-    "start:dev": "npx nodemon",
-    "prod": "node dist/app.js",
+    "start:web:dev": "npx nodemon ./src/index.ts start web",
+    "start:todoist:dev": "npx nodemon ./src/integrations/todoist.ts",
     "build": "tsc",
     "start": "ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs"
@@ -28,6 +28,7 @@
     "lodash-es": "^4.17.21",
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
+    "todoist": "^1.1.0",
     "type-graphql": "^2.0.0-beta.2",
     "typeorm": "^0.3.17"
   }

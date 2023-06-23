@@ -3,6 +3,9 @@
         "src"
     ],
     "ext": ".ts,.js",
-    "ignore": [],
-    "exec": "npx ts-node --esm ./src/index.ts"
+    "ignore": [
+        ".git",
+        "node_modules"
+    ],
+    "exec": "npx ts-node --esm "
 }

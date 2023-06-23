@@ -4,7 +4,19 @@
 > Do not try to use it
 
 
-### Local setup
+## Local setup
+
+### Integrations
+
+#### Todoist
+
+Create a [new app](https://developer.todoist.com/appconsole.html) and get **Test token** to get started quickly:
+
+```shell
+export TODOIST_TOKEN=<your token>
+```
+
+For integration to work
 
 ```shell
 docker compose up -d
