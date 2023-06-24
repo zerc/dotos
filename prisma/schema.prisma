@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Todo {
+  id          String    @id(map: "PK_d429b7114371f6a35c5cb4776a7") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  text        String
+  createdAt   DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime? @db.Timestamp(6)
+  categoryId  String?   @db.Uuid
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_d2b734249ae64a7c7468d1d104c")
+}
+
+model Category {
+  id        String   @id(map: "PK_1a5448d48035763b9dbab86555b") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String   @db.VarChar(150)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  todos     Todo[]
+}
+
+model IntegrationTodo {
+  externalId      String   @id(map: "PK_52ea2ab8b0b4d05c617f2aa0930") @db.VarChar
+  integrationName String   @db.VarChar
+  internalId      String?  @db.VarChar
+  text            String
+  completed       Boolean
+  inSync          Boolean  @default(false)
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime @updatedAt
+
+  @@unique([externalId, integrationName], map: "IDX_bbf971e05ef82dad29b9698ced")
+  @@index([internalId], map: "IDX_b4fd2de2be24bb55906bfffb63")
+}
+
+model RegreshToken {
+  integrationName String   @id(map: "PK_cfa3fca324af7cbedbee89b88b1") @db.VarChar(100)
+  token           String
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime @updatedAt
+}

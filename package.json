@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "Example of over engineered todo app haha",
   "scripts": {
-    "start:web:dev": "npx nodemon ./src/index.ts start web",
+    "start:app:dev": "npx nodemon ./src/app.ts",
     "start:todoist:dev": "npx nodemon ./src/integrations/todoist.ts",
     "build": "tsc",
     "start": "ts-node src/index.ts",
@@ -16,12 +16,17 @@
     "@types/lodash": "^4.14.195",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^16.11.10",
+    "graphql-fields": "^2.0.3",
     "nodemon": "^2.0.22",
+    "prisma": "^4.16.1",
     "ts-node": "^10.7.0",
+    "typegraphql-prisma": "^0.26.0",
     "typescript": "^4.5.2"
   },
   "dependencies": {
     "@apollo/server": "^4.7.4",
+    "@prisma/client": "^4.16.1",
+    "class-validator": "^0.14.0",
     "dotenv": "^16.3.1",
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
