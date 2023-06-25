@@ -84,7 +84,7 @@ A little demo:
 
 Here are the things I'd like to do but decided to de-prioritise due to limited time:
 
-* **There are no tests**. I planned to use [jest](https://jestjs.io/docs/getting-started) for that.
+* **There are no tests**. There probably a few bugs because of that. I planned to use [jest](https://jestjs.io/docs/getting-started) for that.
 * Data consistency. The current implementation does not tolerate well when third-party service is not available and it may lead to data inconsistency. One way this can be addressed is by replacing the in-memory channel implementation for the [message bus](https://github.com/Dashlane/ts-event-bus) to ensure it can retry `onError` and persist events. However, the application is designed in a way that can be improved without rewriting everything.
 * `uuid4` is used to generate a distributed ID for the todos stored locally (in the API layer). In the production system, however, there might be a need for a more sophisticated solution to ensure data integrity.
 
