@@ -6,5 +6,5 @@ import { SortOrder } from './input.js'
 export const resolvers = [CategoryResolver, TodoResolver] as const
 
 registerEnumType(SortOrder, {
-    name: 'SortOrder',
+  name: 'SortOrder'
 })

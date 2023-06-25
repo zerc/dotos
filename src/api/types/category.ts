@@ -1,16 +1,16 @@
-import { Field, ObjectType, ID } from "type-graphql";
-import { Todo } from './todo.js';
+import { Field, ObjectType, ID } from 'type-graphql'
+import { Todo } from './todo.js'
 
 @ObjectType()
 export class Category {
-    @Field(() => ID)
-    id: string;
+  @Field(() => ID)
+  id: string
 
-    @Field(() => String)
-    name: string;
+  @Field(() => String)
+  name: string
 
-    createdAt: Date;
+  createdAt: Date
 
-    @Field(() => [Todo], { nullable: true })
-    todos?: Todo[];
+  @Field(() => [Todo], { nullable: true })
+  todos?: Todo[]
 }
