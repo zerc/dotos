@@ -5,7 +5,7 @@
   "description": "Example of over engineered todo app haha",
   "scripts": {
     "start:app:dev": "npx nodemon ./src/app.ts",
-    "start:todoist:dev": "npx nodemon ./src/integrations/todoist.ts",
+    "start:worker:dev": "npx nodemon ./src/worker.ts",
     "build": "tsc",
     "start": "ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs"
@@ -26,6 +26,7 @@
   "dependencies": {
     "@apollo/server": "^4.7.4",
     "@prisma/client": "^4.16.1",
+    "@types/uuid": "^9.0.2",
     "class-validator": "^0.14.0",
     "dotenv": "^16.3.1",
     "graphql": "^16.6.0",
@@ -34,7 +35,10 @@
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
     "todoist": "^1.1.0",
+    "ts-event-bus": "^4.1.1",
     "type-graphql": "^2.0.0-beta.2",
-    "typeorm": "^0.3.17"
+    "typedi": "^0.10.0",
+    "typeorm": "^0.3.17",
+    "uuid": "^9.0.0"
   }
 }

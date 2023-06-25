@@ -1,6 +1,6 @@
-import { ArgsType, Field, Int } from "type-graphql";
-import { OrderByCreatedAt, SortOrder } from "./input.js";
-import { Min } from "class-validator"
+import { ArgsType, Field, Int } from 'type-graphql'
+import { OrderByCreatedAt, SortOrder } from './input.js'
+import { Min } from 'class-validator'
 
 @ArgsType()
 export class DefaultListArgs {

@@ -1,4 +1,4 @@
-import { InputType, Field, registerEnumType } from "type-graphql";
+import { InputType, Field, registerEnumType } from 'type-graphql'
 
 export enum SortOrder {
     asc = 'asc',

@@ -28,11 +28,10 @@ model IntegrationTodo {
   externalId      String   @id(map: "PK_52ea2ab8b0b4d05c617f2aa0930") @db.VarChar
   integrationName String   @db.VarChar
   internalId      String?  @db.VarChar
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  lastSyncedAt    DateTime @updatedAt
   text            String
   completed       Boolean
-  inSync          Boolean  @default(false)
-  createdAt       DateTime @default(now()) @db.Timestamp(6)
-  updatedAt       DateTime @updatedAt
 
   @@unique([externalId, integrationName], map: "IDX_bbf971e05ef82dad29b9698ced")
   @@index([internalId], map: "IDX_b4fd2de2be24bb55906bfffb63")

@@ -1,14 +1,22 @@
-import * as _ from "lodash-es"
+import * as _ from 'lodash-es'
+import { Query, Resolver, Mutation, Arg, Int, Ctx, Args, FieldResolver, Root } from 'type-graphql'
+import { v4 as uuidv4 } from 'uuid'
+import { Service } from 'typedi'
+import { Todo } from '../types/todo.js'
+import { Context } from '../context.js'
+import { DefaultListArgs } from './arguments.js'
+import { Category } from '../types/category.js'
+import { TodoService } from '../services/todo.js'
 
-import { Query, Resolver, Mutation, Arg, Int, Ctx, Args, FieldResolver, Root } from "type-graphql";
-import { Todo } from "../types/todo.js";
-import { Context } from "../../context.js";
-import { DefaultListArgs } from "./arguments.js";
-import { Category } from "../types/category.js";
 
-
+@Service()
 @Resolver(Todo)
 export class TodoResolver {
+
+    constructor(
+        private readonly todoService: TodoService
+    ) { }
+
     @FieldResolver()
     async category(@Root() todo: Todo, @Ctx() ctx: Context): Promise<Category | null> {
         return ctx.prisma.todo.findUnique({
@@ -26,7 +34,7 @@ export class TodoResolver {
     @Query(() => [Todo])
     async listTodo(
         @Args() { searchString, skip, take, orderBy }: DefaultListArgs,
-        @Arg("completed", { nullable: true }) completed: boolean,
+        @Arg('completed', { nullable: true }) completed: boolean,
         @Ctx() ctx: Context,
     ) {
         let filter: {
@@ -42,12 +50,7 @@ export class TodoResolver {
             filter.completedAt = completed ? { not: null } : null
         }
 
-        return ctx.prisma.todo.findMany({
-            where: _.isEmpty(filter) ? undefined : filter,
-            take: take || undefined,
-            skip: skip || undefined,
-            orderBy: orderBy || undefined,
-        })
+        return this.todoService.list({ filter, take, skip, orderBy })
     }
 
     @Query(() => Todo, { nullable: true })
@@ -55,9 +58,7 @@ export class TodoResolver {
         @Arg('id') id: string,
         @Ctx() ctx: Context
     ) {
-        return ctx.prisma.todo.findUnique({
-            where: { id },
-        })
+        return this.todoService.get({ id })
     }
 
     @Mutation(() => Todo)
@@ -66,15 +67,20 @@ export class TodoResolver {
         @Arg('categoryId', { nullable: true }) categoryId: string,
         @Ctx() ctx: Context,
     ) {
-        return ctx.prisma.todo.create({
-            data: {
-                text: text,
-                categoryId: categoryId
-            },
-            include: {
-                category: true
+        const item = await this.todoService.create({ text, categoryId })
+
+        await ctx.eventBus.todoCreated({
+            id: uuidv4(),
+            source: 'api',
+            timestamp: new Date(),
+            payload: {
+                id: item.id,
+                text: item.text,
+                completed: !_.isNil(item.completedAt)
             }
         })
+
+        return item
     }
 
     @Mutation(() => Todo, { nullable: true })
@@ -98,13 +104,19 @@ export class TodoResolver {
             throw Error('Nothing to update')
         }
 
-        const item = await ctx.prisma.todo.findUnique({
-            where: { id },
+        const item = await this.todoService.update({ id, data })
+
+        await ctx.eventBus.todoUpdated({
+            id: uuidv4(),
+            source: 'api',
+            timestamp: new Date(),
+            payload: {
+                id: item.id,
+                text: item.text,
+                completed: !_.isNil(item.completedAt)
+            }
         })
 
-        return ctx.prisma.todo.update({
-            where: { id },
-            data: data
-        })
+        return item
     }
 }
