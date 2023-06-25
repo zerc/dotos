@@ -4,7 +4,9 @@ import { Category } from '../types/category.js'
 import { Context } from '../context.js'
 import { DefaultListArgs } from './arguments.js'
 import { Todo } from '../types/todo.js'
+import { Service } from 'typedi'
 
+@Service()
 @Resolver(Category)
 export class CategoryResolver {
   @FieldResolver()
@@ -22,8 +24,8 @@ export class CategoryResolver {
   async listCategory(@Args() { searchString, skip, take, orderBy }: DefaultListArgs, @Ctx() ctx: Context) {
     const search = searchString
       ? {
-          name: { contains: searchString }
-        }
+        name: { contains: searchString }
+      }
       : {}
 
     return ctx.prisma.category.findMany({

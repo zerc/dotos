@@ -12,6 +12,7 @@ interface ListFilter {
 interface UpdateParams {
   text?: string
   completedAt?: Date
+  categoryId?: string
 }
 
 @Service()

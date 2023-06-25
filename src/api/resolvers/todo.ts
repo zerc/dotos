@@ -11,7 +11,7 @@ import { TodoService } from '../services/todo.js'
 @Service()
 @Resolver(Todo)
 export class TodoResolver {
-  constructor(private readonly todoService: TodoService) {}
+  constructor(private readonly todoService: TodoService) { }
 
   @FieldResolver()
   async category(@Root() todo: Todo, @Ctx() ctx: Context): Promise<Category | null> {
@@ -83,9 +83,10 @@ export class TodoResolver {
     @Arg('id') id: string,
     @Arg('text', { nullable: true }) text: string,
     @Arg('complete', { nullable: true }) complete: boolean,
+    @Arg('categoryId', { nullable: true }) categoryId: string,
     @Ctx() ctx: Context
   ) {
-    let data: { completedAt?: Date; text?: string } = {}
+    let data: { completedAt?: Date; text?: string, categoryId?: string } = {}
 
     if (!_.isNil(complete)) {
       data.completedAt = complete ? new Date() : null
@@ -93,6 +94,10 @@ export class TodoResolver {
 
     if (!_.isNil(text)) {
       data.text = text
+    }
+
+    if (!_.isNil(categoryId)) {
+      data.categoryId = categoryId
     }
 
     if (_.isEmpty(data)) {

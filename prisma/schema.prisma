@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Todo {
-  id          String    @id(map: "PK_d429b7114371f6a35c5cb4776a7") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String    @id(map: "PK_d429b7114371f6a35c5cb4776a7") @default(uuid()) @db.Uuid
   text        String
   createdAt   DateTime  @default(now()) @db.Timestamp(6)
   updatedAt   DateTime  @updatedAt
@@ -18,7 +18,7 @@ model Todo {
 }
 
 model Category {
-  id        String   @id(map: "PK_1a5448d48035763b9dbab86555b") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String   @id(map: "PK_1a5448d48035763b9dbab86555b") @default(uuid()) @db.Uuid
   name      String   @db.VarChar(150)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   todos     Todo[]

@@ -87,6 +87,7 @@ Here are the things I'd like to do but decided to de-prioritise due to limited t
 * **There are no tests**. There probably a few bugs because of that. I planned to use [jest](https://jestjs.io/docs/getting-started) for that.
 * Data consistency. The current implementation does not tolerate well when third-party service is not available and it may lead to data inconsistency. One way this can be addressed is by replacing the in-memory channel implementation for the [message bus](https://github.com/Dashlane/ts-event-bus) to ensure it can retry `onError` and persist events. However, the application is designed in a way that can be improved without rewriting everything.
 * `uuid4` is used to generate a distributed ID for the todos stored locally (in the API layer). In the production system, however, there might be a need for a more sophisticated solution to ensure data integrity.
+* Data design could be improved in many ways e.g. index for search optimisation (FTS for example), more complex query builder to avoid extra queries etc.
 
 ## Local setup
 
@@ -108,12 +109,15 @@ To start the database run.
 docker compose up -d
 ```
 
-Its admin interface will be available on http://localhost:8080/
+It may take a few seconds for the database to start, check logs - `docker compose logs -f db`.
+
+The admin interface will be available on http://localhost:8080/ and credentials can be found [here](./.env).
 
 ### Install and run
 
 ```shell
 npm install
+npx prisma db push
 npm run start:app:dev
 ```
 
