@@ -27,7 +27,7 @@ class DummyIntegration extends AbstractClient {
       this.dummyIncoming.push({
         id: uuidv4(),
         content: `dum-dum dummy todo number ${value}`,
-        completed: value % 2 === 0
+        completed: false
       })
     })
   }
