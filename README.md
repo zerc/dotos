@@ -76,6 +76,8 @@ The service has two integrations:
 
 A little demo:
 
+![demo](https://github.com/zerc/dotos/assets/306862/e549b0b9-a921-4b3c-a142-b047826e64c4)
+
 
 
 ### Shortcuts
